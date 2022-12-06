@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://109.234.35.103:5430/database
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+messages:
+  incorrectEquation: Incorrect equation - Discriminant is less than zero or Infinite Solutions
