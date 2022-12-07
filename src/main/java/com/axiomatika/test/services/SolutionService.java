@@ -7,7 +7,10 @@ import com.axiomatika.test.exceptions.EquationException;
 import com.axiomatika.test.repository.SolutionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Predicate;
 
 @Service
 @Slf4j
@@ -19,7 +22,8 @@ public class SolutionService {
         this.solutionRepository = solutionRepository;
     }
 
-    public Solution solve(EquationDTO equationDTO) {
+    @Cacheable(value = "solution",key = "{ #equationDTO.a, #equationDTO.b, #equationDTO.c}")
+    public Solution solve(EquationDTO equationDTO) throws InterruptedException {
         double a = equationDTO.getA();
         double b = equationDTO.getB();
         double c = equationDTO.getC();
@@ -46,6 +50,18 @@ public class SolutionService {
             log.info("SolutionService.solve(): Successfully solved equation with 2 roots");
         }
         solution.setEquation(equation);
+        Thread.sleep(4000L);
+        simulateSlowService();
         return solutionRepository.save(solution);
     }
+
+    private void simulateSlowService() {
+        try {
+            long time = 3000L;
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 }
