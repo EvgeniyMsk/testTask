@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/task")
 @Slf4j
-@Tag(name="Главный контроллер", description="Решение квадратного уравления")
+@Tag(name="Главный контроллер", description="Решение квадратного уравнения")
 public class MainController {
     private final SolutionService service;
     @Value("${messages.incorrectEquation}")
@@ -30,9 +30,9 @@ public class MainController {
     @PostMapping
     @Operation(
             summary = "runTask",
-            description = "Пытаемся решить квадратное уравление. На вход поступает " +
+            description = "Пытаемся решить квадратное уравнение. На вход поступает " +
                     "JSON с полями a,b,c - коэффициенты квадратного уравнения. " +
-                    "Программа сохраняет значения коэффициентов и расситанных корней уравнения в базу данных." +
+                    "Программа сохраняет значения коэффициентов и рассчитанных корней уравнения в базу данных." +
                     "Пользователю возвращается JSON с решением уравнения. В случае, если найти корни уравнения нельзя, " +
                     "возвращается ошибка"
     )
